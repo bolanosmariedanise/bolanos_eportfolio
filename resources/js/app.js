@@ -115,6 +115,7 @@ const modalState = {
     isOpen: false,
     projectIndex: -1,
     imageIndex: 0,
+    isTransitioning: false,
     touchStartX: 0,
     touchStartY: 0,
     previousFocus: null,
@@ -202,6 +203,7 @@ function closeProjectModal() {
     modalState.isOpen = false;
     modalState.projectIndex = -1;
     modalState.imageIndex = 0;
+    modalState.isTransitioning = false;
 
     if (modalState.previousFocus && typeof modalState.previousFocus.focus === 'function') {
         modalState.previousFocus.focus();
@@ -239,6 +241,8 @@ function updateGalleryControls(images) {
 
 function setGalleryImage(images, newIndex) {
     if (newIndex < 0 || newIndex >= images.length) return;
+    if (modalState.isTransitioning) return;
+    modalState.isTransitioning = true;
 
     const img = document.getElementById('modal-gallery-image');
     img.classList.add('is-switching');
@@ -248,6 +252,7 @@ function setGalleryImage(images, newIndex) {
         img.src = images[newIndex];
         img.classList.remove('is-switching');
         updateGalleryControls(images);
+        modalState.isTransitioning = false;
     }, 200);
 }
 
@@ -352,30 +357,23 @@ function initCertModal() {
     /* keydown handler is shared with project modal above */
 }
 
-function openCertModal(title, fileUrl) {
+function openCertModal(title, imageUrl) {
     const modal = document.getElementById('cert-modal');
-    if (!modal || !fileUrl) return;
+    if (!modal || !imageUrl) return;
 
     certModalState.previousFocus = document.activeElement;
     certModalState.isOpen = true;
 
     document.getElementById('cert-modal-title').textContent = title;
-    document.getElementById('cert-modal-download').href = fileUrl;
 
-    const iframe = document.getElementById('cert-modal-iframe');
-    const fallback = document.getElementById('cert-modal-fallback');
-    const fallbackLink = document.getElementById('cert-modal-fallback-link');
+    const img = document.getElementById('cert-modal-image');
+    img.src = imageUrl;
+    img.alt = title;
 
-    iframe.src = fileUrl;
-    fallbackLink.href = fileUrl;
-    fallback.style.display = 'none';
-    iframe.style.display = 'block';
-
-    /* Detect if browser can't render PDFs inline (common on mobile) */
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isMobile) {
-        iframe.style.display = 'none';
-        fallback.style.display = 'flex';
+    const downloadLink = document.getElementById('cert-modal-download');
+    if (downloadLink) {
+        downloadLink.href = imageUrl;
+        downloadLink.download = imageUrl.split('/').pop();
     }
 
     modal.classList.add('is-open');
@@ -397,12 +395,26 @@ function closeCertModal() {
     document.body.classList.remove('cert-modal-open');
     certModalState.isOpen = false;
 
-    /* Clear the iframe src to stop PDF loading */
-    const iframe = document.getElementById('cert-modal-iframe');
-    if (iframe) iframe.src = '';
+    const img = document.getElementById('cert-modal-image');
+    if (img) { img.src = ''; img.alt = ''; }
 
     if (certModalState.previousFocus && typeof certModalState.previousFocus.focus === 'function') {
         certModalState.previousFocus.focus();
     }
     certModalState.previousFocus = null;
 }
+
+/* ════════════════════════════════════════
+   Expose functions to global scope
+   Needed because app.js is loaded as an
+   ES module (type="module") — top-level
+   declarations are module-scoped and
+   invisible to inline onclick handlers.
+   ════════════════════════════════════════ */
+window.openProjectModal = openProjectModal;
+window.closeProjectModal = closeProjectModal;
+window.prevGalleryImage = prevGalleryImage;
+window.nextGalleryImage = nextGalleryImage;
+window.goToGalleryImage = goToGalleryImage;
+window.openCertModal = openCertModal;
+window.closeCertModal = closeCertModal;

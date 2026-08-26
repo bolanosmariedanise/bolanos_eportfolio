@@ -101,10 +101,10 @@
 
                 {{-- Bio text --}}
                 <div>
-                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary); font-family: var(--font-heading);">
+                    <h3 class="text-2xl font-bold mb-4" style="color: var(--text-primary); font-family: var(--font-serif);">
                         A bit about my journey
                     </h3>
-                    <div class="space-y-4" style="color: var(--text-secondary);">
+                    <div class="space-y-4 font-merriweather" style="color: var(--text-secondary);">
                         <p>
                             I'm Marie Danise Bola&ntilde;os, a 4th year Bachelor of Science in Information Technology
                             student at Data Center College of the Philippines &mdash; Bangued. I have a strong foundation
@@ -119,7 +119,7 @@
                     </div>
 
                     {{-- Skill pills --}}
-                    <div class="flex flex-wrap gap-3 mt-6">
+                    <div class="flex flex-wrap gap-3 mt-6 font-merriweather">
                         @foreach(['Web Development', 'Data Analytics', 'IT Support', 'Data Visualization', 'Computer Systems', 'ICT'] as $skill)
                             <span class="px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 hover:scale-105"
                                   style="background-color: var(--accent-50); color: var(--accent-600); border: 1px solid var(--accent-200);">
@@ -143,7 +143,7 @@
                     'icon' => 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
                 ])
                 @include('components.stat-card', [
-                    'number' => '1',
+                    'number' => '4',
                     'label' => 'Year in College',
                     'icon' => 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z',
                 ])
@@ -195,14 +195,14 @@
                         <div class="p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                              style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
                             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                                <h3 class="text-lg font-bold" style="color: var(--text-primary);">{!! $edu['degree'] !!}</h3>
+                                <h3 class="text-lg font-bold" style="color: var(--text-primary); font-family: var(--font-serif);">{!! $edu['degree'] !!}</h3>
                                 <span class="text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap"
                                       style="background-color: var(--accent-50); color: var(--accent-600);">
                                     {!! $edu['period'] !!}
                                 </span>
                             </div>
                             <p class="text-sm font-medium mb-2" style="color: var(--accent-500);">{!! $edu['institution'] !!}</p>
-                            <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">{{ $edu['description'] }}</p>
+                            <p class="text-sm leading-relaxed font-merriweather" style="color: var(--text-secondary);">{{ $edu['description'] }}</p>
                         </div>
                     </div>
                 @endforeach
@@ -220,19 +220,19 @@
                             'title' => 'Online Safety Through Netiquette',
                             'issuer' => 'DICT — Region II',
                             'date' => 'July 23, 2026',
-                            'file' => '/certificates/157.pdf',
-                        ],
-                        [
-                            'title' => 'Data Analytics and Visualization Essentials',
-                            'issuer' => 'DICT — ILCDB, Cordillera Administrative Region',
-                            'date' => 'December 11, 2025',
-                            'file' => '/certificates/DATA_CERT.pdf',
+                            'image' => '/certificates/onlinesafety.png',
                         ],
                         [
                             'title' => 'Computer System Servicing (CSS) NCII',
                             'issuer' => 'TESDA',
                             'date' => 'September 6, 2025',
-                            'file' => '/certificates/NC.pdf',
+                            'image' => '/certificates/NCII.png',
+                        ],
+                        [
+                            'title' => 'Data Analytics and Visualization Essentials',
+                            'issuer' => 'DICT — ILCDB, Cordillera Administrative Region',
+                            'date' => 'December 11, 2025',
+                            'image' => '/certificates/Dataanalytics.png',
                         ],
                     ];
                 @endphp
@@ -240,12 +240,12 @@
                 <div class="grid sm:grid-cols-2 gap-6">
                     @foreach($certifications as $cert)
                         <div class="cert-card flex items-start gap-4 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
-                             @if(!empty($cert['file']))
+                             @if(!empty($cert['image']))
                              style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); cursor: pointer;"
-                             onclick="openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['file']) }}')"
+                             onclick="openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['image']) }}')"
                              role="button" tabindex="0"
                              aria-label="View certificate: {{ $cert['title'] }}"
-                             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['file']) }}')}"
+                             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['image']) }}')}"
                              @else
                              style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);"
                              @endif
@@ -258,11 +258,11 @@
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="text-sm font-bold mb-1" style="color: var(--text-primary);">{{ $cert['title'] }}</h4>
-                                <p class="text-xs font-medium" style="color: var(--accent-500);">{{ $cert['issuer'] }}</p>
-                                <p class="text-xs mt-1" style="color: var(--text-muted);">{{ $cert['date'] }}</p>
+                                <h4 class="text-sm font-bold mb-1 font-merriweather" style="color: var(--text-primary);">{{ $cert['title'] }}</h4>
+                                <p class="text-xs font-medium font-merriweather" style="color: var(--accent-500);">{{ $cert['issuer'] }}</p>
+                                <p class="text-xs mt-1 font-merriweather" style="color: var(--text-muted);">{{ $cert['date'] }}</p>
                             </div>
-                            @if(!empty($cert['file']))
+                            @if(!empty($cert['image']))
                             <div class="flex-shrink-0 self-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
                                      style="color: var(--accent-500);">
@@ -360,7 +360,7 @@
 
                 {{-- Contact Info --}}
                 <div class="space-y-8">
-                    <h3 class="text-xl font-bold" style="color: var(--text-primary); font-family: var(--font-heading);">
+                    <h3 class="text-xl font-bold" style="color: var(--text-primary); font-family: var(--font-serif);">
                         Let's work together
                     </h3>
                     <p class="leading-relaxed" style="color: var(--text-secondary);">
@@ -534,13 +534,13 @@
                 <div class="cert-modal-actions">
                     <a id="cert-modal-download" href="" target="_blank" rel="noopener"
                        class="cert-modal-action-btn"
-                       aria-label="Open certificate in new tab">
+                       aria-label="Download certificate">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-                            <polyline points="15 3 21 3 21 9"/>
-                            <line x1="10" y1="14" x2="21" y2="3"/>
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
                         </svg>
-                        <span>Open in Tab</span>
+                        <span>Download</span>
                     </a>
                     <button class="cert-modal-close" onclick="closeCertModal()" aria-label="Close certificate viewer">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -550,24 +550,9 @@
                 </div>
             </div>
 
-            {{-- PDF Embed --}}
+            {{-- Certificate Image --}}
             <div class="cert-modal-body">
-                <iframe id="cert-modal-iframe" src="" title="Certificate document" class="cert-modal-iframe"></iframe>
-                {{-- Fallback message for mobile browsers that don't render PDFs --}}
-                <div id="cert-modal-fallback" class="cert-modal-fallback" style="display:none;">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                         style="color: var(--text-muted); margin-bottom: 1rem;">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
-                    </svg>
-                    <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem;">PDF preview is not available in this browser.</p>
-                    <a id="cert-modal-fallback-link" href="" target="_blank" rel="noopener"
-                       class="cert-modal-fallback-btn">
-                        Open Certificate in New Tab
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-                        </svg>
-                    </a>
-                </div>
+                <img id="cert-modal-image" src="" alt="" class="cert-modal-image">
             </div>
         </div>
     </div>

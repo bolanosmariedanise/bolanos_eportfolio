@@ -35,11 +35,11 @@
             onmouseover="this.style.color='var(--accent-500)'" onmouseout="this.style.color='var(--text-primary)'">
             {{ $title }}
         </h3>
-        <p class="text-sm mb-4 leading-relaxed cursor-pointer" style="color: var(--text-secondary);"
+        <p class="text-sm mb-4 leading-relaxed cursor-pointer font-merriweather" style="color: var(--text-secondary);"
            onclick="openProjectModal({{ $loop->index }})">{{ $description }}</p>
 
         {{-- Tech tags --}}
-        <div class="flex flex-wrap gap-2 mb-4">
+        <div class="flex flex-wrap gap-2 mb-4 font-merriweather">
             @foreach($tags as $tag)
                 <span class="px-2.5 py-1 text-xs font-medium rounded-full transition-colors duration-200"
                       style="background-color: var(--accent-50); color: var(--accent-600);">

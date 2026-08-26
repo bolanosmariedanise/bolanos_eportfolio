@@ -9,6 +9,13 @@
     --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Merriweather', Georgia, 'Times New Roman', serif;
+}
+
+/* ── Merriweather utility for serif body/headings ── */
+.font-merriweather {
+    font-family: var(--font-serif);
+    line-height: 1.8;
 }
 
 /* ── Beige & Peach-Pink palette ── */
@@ -351,6 +358,11 @@ body {
 /* Stat card icons */
 .dark .group svg[style*="accent-500"] {
     color: #f5b8b0 !important;
+}
+
+/* Stat card number — override inline font-family with Merriweather */
+[data-serif] .text-3xl {
+    font-family: var(--font-serif) !important;
 }
 
 /* Certification icons */
@@ -822,50 +834,22 @@ body.modal-open {
     outline-offset: 2px;
 }
 
-/* Body / PDF area */
+/* Body / certificate image area */
 .cert-modal-body {
     flex: 1;
     position: relative;
-    background-color: #525659;
+    background-color: #1a1510;
     min-height: 0;
-}
-
-.cert-modal-iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
-
-/* Fallback for browsers that don't render PDFs */
-.cert-modal-fallback {
-    position: absolute;
-    inset: 0;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--bg-card);
-    text-align: center;
-    padding: 2rem;
+    overflow: hidden;
 }
 
-.cert-modal-fallback-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.625rem 1.25rem;
-    border-radius: 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: #ffffff;
-    background-color: var(--accent-300);
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.cert-modal-fallback-btn:hover {
-    background-color: var(--accent-400);
-    transform: translateY(-1px);
+.cert-modal-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 /* Body scroll lock when cert modal is open */
