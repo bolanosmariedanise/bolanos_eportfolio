@@ -1,13 +1,19 @@
-{{-- Reusable Project Card --}}
-{{-- Usage: @include('components.project-card', [...]) --}}
+@php
+    $primaryImage = !empty($images) ? $images[0] : ($image ?? '');
+@endphp
 
 <div class="group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
-     style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+     style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);"
+     data-project-index="{{ $loop->index }}">
 
-    {{-- Thumbnail --}}
-    <div class="relative h-48 overflow-hidden" style="background-color: var(--bg-secondary);">
-        @if(!empty($image))
-            <img src="{{ $image }}" alt="{{ $title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+    {{-- Thumbnail — clickable --}}
+    <div class="relative h-48 overflow-hidden cursor-pointer" style="background-color: var(--bg-secondary);"
+         onclick="openProjectModal({{ $loop->index }})"
+         role="button" tabindex="0"
+         aria-label="Open details for {{ $title }}"
+         onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProjectModal({{ $loop->index }})}">
+        @if(!empty($primaryImage))
+            <img src="{{ $primaryImage }}" alt="{{ $title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
         @else
             <div class="w-full h-full flex items-center justify-center">
                 <svg class="w-16 h-16 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"
@@ -21,14 +27,16 @@
         <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </div>
 
-    {{-- Content --}}
+    {{-- Content — description clickable to open modal --}}
     <div class="p-6">
-        <h3 class="text-lg font-bold mb-2 transition-colors duration-200"
+        <h3 class="text-lg font-bold mb-2 transition-colors duration-200 cursor-pointer"
             style="color: var(--text-primary);"
+            onclick="openProjectModal({{ $loop->index }})"
             onmouseover="this.style.color='var(--accent-500)'" onmouseout="this.style.color='var(--text-primary)'">
             {{ $title }}
         </h3>
-        <p class="text-sm mb-4 leading-relaxed" style="color: var(--text-secondary);">{{ $description }}</p>
+        <p class="text-sm mb-4 leading-relaxed cursor-pointer" style="color: var(--text-secondary);"
+           onclick="openProjectModal({{ $loop->index }})">{{ $description }}</p>
 
         {{-- Tech tags --}}
         <div class="flex flex-wrap gap-2 mb-4">

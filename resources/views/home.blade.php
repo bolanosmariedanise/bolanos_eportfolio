@@ -138,7 +138,7 @@
                     'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
                 ])
                 @include('components.stat-card', [
-                    'number' => '2',
+                    'number' => '3',
                     'label' => 'Certifications',
                     'icon' => 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
                 ])
@@ -217,22 +217,39 @@
                 @php
                     $certifications = [
                         [
+                            'title' => 'Online Safety Through Netiquette',
+                            'issuer' => 'DICT — Region II',
+                            'date' => 'July 23, 2026',
+                            'file' => '/certificates/157.pdf',
+                        ],
+                        [
                             'title' => 'Data Analytics and Visualization Essentials',
-                            'issuer' => 'DICT',
+                            'issuer' => 'DICT — ILCDB, Cordillera Administrative Region',
                             'date' => 'December 11, 2025',
+                            'file' => '/certificates/DATA_CERT.pdf',
                         ],
                         [
                             'title' => 'Computer System Servicing (CSS) NCII',
                             'issuer' => 'TESDA',
                             'date' => 'September 6, 2025',
+                            'file' => '/certificates/NC.pdf',
                         ],
                     ];
                 @endphp
 
                 <div class="grid sm:grid-cols-2 gap-6">
                     @foreach($certifications as $cert)
-                        <div class="flex items-start gap-4 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
-                             style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+                        <div class="cert-card flex items-start gap-4 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
+                             @if(!empty($cert['file']))
+                             style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); cursor: pointer;"
+                             onclick="openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['file']) }}')"
+                             role="button" tabindex="0"
+                             aria-label="View certificate: {{ $cert['title'] }}"
+                             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['file']) }}')}"
+                             @else
+                             style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);"
+                             @endif
+                             >
                             <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
                                  style="background-color: var(--accent-50);">
                                 <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
@@ -240,11 +257,19 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/>
                                 </svg>
                             </div>
-                            <div>
+                            <div class="flex-1 min-w-0">
                                 <h4 class="text-sm font-bold mb-1" style="color: var(--text-primary);">{{ $cert['title'] }}</h4>
                                 <p class="text-xs font-medium" style="color: var(--accent-500);">{{ $cert['issuer'] }}</p>
                                 <p class="text-xs mt-1" style="color: var(--text-muted);">{{ $cert['date'] }}</p>
                             </div>
+                            @if(!empty($cert['file']))
+                            <div class="flex-shrink-0 self-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                                     style="color: var(--accent-500);">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                </svg>
+                            </div>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -268,7 +293,14 @@
                     [
                         'title' => 'Online Selling Management System for Streetwear Apparel',
                         'description' => 'A desktop-based online selling management system built for a streetwear apparel business. Features a clean user dashboard with product browsing, shopping cart, and a Buy Now purchase flow for items like t-shirts, hoodies, and shorts. Supports user profile and cart management for small apparel sellers.',
-                        'image' => '/images/projects/streetwear-pos.png',
+                        'images' => [
+                            '/images/projects/MIS/MIS_1.png',
+                            '/images/projects/MIS/MIS_2.png',
+                            '/images/projects/MIS/MIS_3.png',
+                            '/images/projects/MIS/MIS_4.png',
+                            '/images/projects/MIS/MIS_5.png',
+                            '/images/projects/MIS/MIS_6.png',
+                        ],
                         'tags' => ['C#', 'Windows Forms', '.NET', 'Desktop Application', 'E-Commerce'],
                         'demo' => '',
                         'repo' => '',
@@ -276,7 +308,9 @@
                     [
                         'title' => 'Diocese of Bangued — St. James the Elder Cathedral Parish Viewer Portal',
                         'description' => 'A web-based viewer portal for the Diocese of Bangued and St. James the Elder Cathedral Parish. Allows the public to view the parish calendar of masses, religious events, and activities, learn about its history and leadership, and reach the parish through a Contact Us page. Includes a login system for staff/admin access.',
-                        'image' => '/images/projects/diocese-portal.png',
+                        'images' => [
+                            '/images/projects/diocese-portal.png',
+                        ],
                         'tags' => ['PHP', 'Web Development', 'Visual Studio', 'Church Management System'],
                         'demo' => '',
                         'repo' => '',
@@ -284,7 +318,18 @@
                     [
                         'title' => "Alegria's School PE Dept. Equipment Monitoring & Inventory System",
                         'description' => "A desktop inventory and monitoring system built for a school's PE Department to track sports equipment. Features a dashboard, equipment list management, a borrowing/return tracking module, inventory oversight, and a reports/print function for generating equipment records.",
-                        'image' => '/images/projects/pe-inventory.png',
+                        'images' => [
+                            '/images/projects/EMIS/EMIS_1.png',
+                            '/images/projects/EMIS/EMIS_2.png',
+                            '/images/projects/EMIS/EMIS_3.png',
+                            '/images/projects/EMIS/EMIS_4.png',
+                            '/images/projects/EMIS/EMIS_5.png',
+                            '/images/projects/EMIS/EMIS_6.png',
+                            '/images/projects/EMIS/EMIS_7.png',
+                            '/images/projects/EMIS/EMIS_8.png',
+                            '/images/projects/EMIS/EMIS_9.png',
+                            '/images/projects/EMIS/EMIS_11.png',
+                        ],
                         'tags' => ['C#', 'Windows Forms', '.NET', 'Inventory Management', 'School System'],
                         'demo' => '',
                         'repo' => '',
@@ -419,5 +464,112 @@
             </div>
         </div>
     </section>
+
+    {{-- ═══════════════════════════════════════
+         PROJECT MODAL / LIGHTBOX
+         ═══════════════════════════════════════ --}}
+    <div id="project-modal" class="project-modal" role="dialog" aria-modal="true" aria-label="Project details" aria-hidden="true">
+        <div class="project-modal-backdrop" onclick="closeProjectModal()"></div>
+
+        <div class="project-modal-content" role="document">
+            {{-- Close button --}}
+            <button class="project-modal-close" onclick="closeProjectModal()" aria-label="Close modal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+            </button>
+
+            {{-- Gallery --}}
+            <div class="project-modal-gallery">
+                <div class="project-modal-image-wrapper">
+                    <img id="modal-gallery-image" src="" alt="" class="project-modal-image">
+                </div>
+
+                @if(count($projects) > 0)
+                {{-- Navigation arrows (only shown if >1 image) --}}
+                <button id="modal-prev-btn" class="project-modal-nav project-modal-nav-prev" onclick="prevGalleryImage()" aria-label="Previous image">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <button id="modal-next-btn" class="project-modal-nav project-modal-nav-next" onclick="nextGalleryImage()" aria-label="Next image">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+                @endif
+
+                {{-- Image counter --}}
+                <div id="modal-counter" class="project-modal-counter"></div>
+
+                {{-- Dot indicators --}}
+                <div id="modal-dots" class="project-modal-dots"></div>
+            </div>
+
+            {{-- Details --}}
+            <div class="project-modal-details">
+                <h2 id="modal-title" class="project-modal-title"></h2>
+                <p id="modal-description" class="project-modal-description"></p>
+                <div id="modal-tags" class="project-modal-tags"></div>
+                <div id="modal-links" class="project-modal-links"></div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Pass project data to JavaScript --}}
+    <script>
+        window.__projectsData = @json($projects);
+    </script>
+
+    {{-- ═══════════════════════════════════════
+         CERTIFICATE VIEWER MODAL
+         ═══════════════════════════════════════ --}}
+    <div id="cert-modal" class="cert-modal" role="dialog" aria-modal="true" aria-label="Certificate viewer" aria-hidden="true">
+        <div class="cert-modal-backdrop" onclick="closeCertModal()"></div>
+
+        <div class="cert-modal-content" role="document">
+            {{-- Header --}}
+            <div class="cert-modal-header">
+                <h3 id="cert-modal-title" class="cert-modal-title"></h3>
+                <div class="cert-modal-actions">
+                    <a id="cert-modal-download" href="" target="_blank" rel="noopener"
+                       class="cert-modal-action-btn"
+                       aria-label="Open certificate in new tab">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        <span>Open in Tab</span>
+                    </a>
+                    <button class="cert-modal-close" onclick="closeCertModal()" aria-label="Close certificate viewer">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {{-- PDF Embed --}}
+            <div class="cert-modal-body">
+                <iframe id="cert-modal-iframe" src="" title="Certificate document" class="cert-modal-iframe"></iframe>
+                {{-- Fallback message for mobile browsers that don't render PDFs --}}
+                <div id="cert-modal-fallback" class="cert-modal-fallback" style="display:none;">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                         style="color: var(--text-muted); margin-bottom: 1rem;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                    </svg>
+                    <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem;">PDF preview is not available in this browser.</p>
+                    <a id="cert-modal-fallback-link" href="" target="_blank" rel="noopener"
+                       class="cert-modal-fallback-btn">
+                        Open Certificate in New Tab
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
