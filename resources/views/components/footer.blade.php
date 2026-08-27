@@ -15,21 +15,8 @@
                 <p class="text-sm max-w-xs" style="color: var(--text-muted);">
                     Solving problems through technology with a passion for web development and data visualization.
                 </p>
-            </div>
-
-            {{-- Center: Quick links + contact --}}
-            <div class="flex flex-col items-center gap-4">
-                <div class="flex flex-wrap items-center justify-center gap-6">
-                    @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects'] as $label => $href)
-                        <a href="{{ $href }}" class="text-sm font-medium font-nav transition-colors duration-200"
-                           style="color: var(--text-secondary);"
-                           onmouseover="this.style.color='var(--accent-500)'" onmouseout="this.style.color='var(--text-secondary)'">
-                            {{ $label }}
-                        </a>
-                    @endforeach
-                </div>
                 <a href="tel:+639756188324"
-                   class="flex items-center gap-2 text-sm font-medium transition-colors duration-200"
+                   class="mt-2 inline-flex items-center gap-2 text-sm font-medium transition-colors duration-200"
                    style="color: var(--text-secondary);"
                    onmouseover="this.style.color='var(--accent-500)'" onmouseout="this.style.color='var(--text-secondary)'">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -37,6 +24,17 @@
                     </svg>
                     +63 975 618 8324
                 </a>
+            </div>
+
+            {{-- Center: Quick links --}}
+            <div class="flex flex-wrap items-center justify-center gap-6">
+                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects'] as $label => $href)
+                    <a href="{{ $href }}" class="text-sm font-medium font-nav transition-colors duration-200"
+                       style="color: var(--text-secondary);"
+                       onmouseover="this.style.color='var(--accent-500)'" onmouseout="this.style.color='var(--text-secondary)'">
+                        {{ $label }}
+                    </a>
+                @endforeach
             </div>
 
             {{-- Right: Social icons --}}
