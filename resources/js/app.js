@@ -353,8 +353,187 @@ const certModalState = {
     previousFocus: null,
 };
 
+const certZoomState = {
+    scale: 1,
+    tx: 0,
+    ty: 0,
+    minScale: 1,
+    maxScale: 5,
+    dragging: false,
+    lastX: 0,
+    lastY: 0,
+};
+
+function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+}
+
+function getCertZoomWrap() {
+    return document.getElementById('cert-zoom-wrap');
+}
+
+function applyCertZoom() {
+    const wrap = getCertZoomWrap();
+    if (!wrap) return;
+    const { scale, tx, ty } = certZoomState;
+    wrap.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+    wrap.classList.toggle('is-zoomed', scale > 1);
+
+    const inBtn = document.getElementById('cert-zoom-in');
+    const outBtn = document.getElementById('cert-zoom-out');
+    const resetBtn = document.getElementById('cert-zoom-reset');
+    if (inBtn) inBtn.disabled = scale >= certZoomState.maxScale;
+    if (outBtn) outBtn.disabled = scale <= certZoomState.minScale;
+    if (resetBtn) resetBtn.classList.toggle('hidden', scale <= 1);
+}
+
+function clampCertPan() {
+    const wrap = getCertZoomWrap();
+    const body = document.getElementById('cert-modal-body');
+    if (!wrap || !body) return;
+    const s = certZoomState.scale;
+    const bw = body.clientWidth;
+    const bh = body.clientHeight;
+    const maxX = Math.max(0, (bw * s - bw) / 2);
+    const maxY = Math.max(0, (bh * s - bh) / 2);
+    certZoomState.tx = clamp(certZoomState.tx, -maxX, maxX);
+    certZoomState.ty = clamp(certZoomState.ty, -maxY, maxY);
+}
+
+function certZoomBy(factor, centerX, centerY) {
+    const state = certZoomState;
+    const newScale = clamp(state.scale * factor, state.minScale, state.maxScale);
+    if (newScale === state.scale) return;
+
+    if (centerX !== undefined && centerY !== undefined) {
+        const wrap = getCertZoomWrap();
+        const rect = wrap ? wrap.getBoundingClientRect() : null;
+        if (rect) {
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            const mx = centerX - rect.left - cx;
+            const my = centerY - rect.top - cy;
+            const k = newScale / state.scale;
+            state.tx = state.tx * k + mx * (1 - k);
+            state.ty = state.ty * k + my * (1 - k);
+        }
+    }
+
+    state.scale = newScale;
+    clampCertPan();
+    applyCertZoom();
+}
+
+function certZoomIn() {
+    certZoomBy(1.25);
+}
+
+function certZoomOut() {
+    certZoomBy(0.8);
+}
+
+function resetCertZoom() {
+    certZoomState.scale = 1;
+    certZoomState.tx = 0;
+    certZoomState.ty = 0;
+    applyCertZoom();
+}
+
+function pinchDistance(t1, t2) {
+    const dx = t1.clientX - t2.clientX;
+    const dy = t1.clientY - t2.clientY;
+    return Math.hypot(dx, dy);
+}
+
 function initCertModal() {
-    /* keydown handler is shared with project modal above */
+    const wrap = getCertZoomWrap();
+    if (!wrap) return;
+
+    /* Scroll-wheel zoom (desktop) */
+    wrap.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        certZoomBy(e.deltaY < 0 ? 1.15 : 1 / 1.15, e.clientX, e.clientY);
+    }, { passive: false });
+
+    /* Mouse drag to pan */
+    wrap.addEventListener('mousedown', (e) => {
+        if (e.button !== 0 || certZoomState.scale <= 1) return;
+        certZoomState.dragging = true;
+        certZoomState.lastX = e.clientX;
+        certZoomState.lastY = e.clientY;
+        wrap.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        if (!certZoomState.dragging) return;
+        certZoomState.tx += e.clientX - certZoomState.lastX;
+        certZoomState.ty += e.clientY - certZoomState.lastY;
+        certZoomState.lastX = e.clientX;
+        certZoomState.lastY = e.clientY;
+        clampCertPan();
+        applyCertZoom();
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (!certZoomState.dragging) return;
+        certZoomState.dragging = false;
+        wrap.classList.remove('is-dragging');
+    });
+
+    /* Double-click to reset */
+    wrap.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        resetCertZoom();
+    });
+
+    /* Touch: pinch to zoom, drag to pan, double-tap to reset */
+    let touchStartDist = 0;
+    let touchStartScale = 1;
+    let panStart = { x: 0, y: 0 };
+    let lastTap = 0;
+
+    wrap.addEventListener('touchstart', (e) => {
+        if (e.touches.length >= 2) {
+            touchStartDist = pinchDistance(e.touches[0], e.touches[1]) || 1;
+            touchStartScale = certZoomState.scale;
+        } else if (e.touches.length === 1) {
+            panStart = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+    }, { passive: false });
+
+    wrap.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (e.touches.length >= 2) {
+            const dist = pinchDistance(e.touches[0], e.touches[1]) || 1;
+            certZoomState.scale = clamp(
+                touchStartScale * (dist / touchStartDist),
+                certZoomState.minScale,
+                certZoomState.maxScale
+            );
+            clampCertPan();
+            applyCertZoom();
+        } else if (e.touches.length === 1 && certZoomState.scale > 1) {
+            const x = e.touches[0].clientX;
+            const y = e.touches[0].clientY;
+            certZoomState.tx += x - panStart.x;
+            certZoomState.ty += y - panStart.y;
+            panStart = { x, y };
+            clampCertPan();
+            applyCertZoom();
+        }
+    }, { passive: false });
+
+    wrap.addEventListener('touchend', (e) => {
+        if (e.touches.length === 0) {
+            const now = Date.now();
+            if (now - lastTap < 300) {
+                resetCertZoom();
+                lastTap = 0;
+            } else {
+                lastTap = now;
+            }
+        }
+    }, { passive: false });
 }
 
 function openCertModal(title, imageUrl) {
@@ -370,11 +549,7 @@ function openCertModal(title, imageUrl) {
     img.src = imageUrl;
     img.alt = title;
 
-    const downloadLink = document.getElementById('cert-modal-download');
-    if (downloadLink) {
-        downloadLink.href = imageUrl;
-        downloadLink.download = imageUrl.split('/').pop();
-    }
+    resetCertZoom();
 
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
@@ -397,6 +572,7 @@ function closeCertModal() {
 
     const img = document.getElementById('cert-modal-image');
     if (img) { img.src = ''; img.alt = ''; }
+    resetCertZoom();
 
     if (certModalState.previousFocus && typeof certModalState.previousFocus.focus === 'function') {
         certModalState.previousFocus.focus();
@@ -418,3 +594,6 @@ window.nextGalleryImage = nextGalleryImage;
 window.goToGalleryImage = goToGalleryImage;
 window.openCertModal = openCertModal;
 window.closeCertModal = closeCertModal;
+window.certZoomIn = certZoomIn;
+window.certZoomOut = certZoomOut;
+window.resetCertZoom = resetCertZoom;

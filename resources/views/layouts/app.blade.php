@@ -7,10 +7,10 @@
     <title>{{ $title ?? 'Portfolio' }} — Personal Portfolio</title>
     <meta name="description" content="{{ $description ?? 'Personal portfolio website showcasing projects, education, and experience.' }}">
 
-    {{-- Google Fonts: Inter + Poppins + Merriweather --}}
+    {{-- Google Fonts: Inter + Poppins + Merriweather + Montserrat + Baloo 2 (Hagrid fallback) --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Poppins:wght@600;700;800&family=Dancing+Script:wght@600;700&family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Poppins:wght@600;700;800&family=Dancing+Script:wght@600;700&family=Abril+Fatface&family=Montserrat:wght@500;600;700;800&family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet">
 
     {{-- Vite CSS/JS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])

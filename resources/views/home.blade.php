@@ -91,9 +91,22 @@
                 {{-- Profile image --}}
                 <div class="relative flex justify-center">
                     <div class="relative">
-                        <div class="profile-shadow w-72 h-72 sm:w-80 sm:h-80 rounded-3xl overflow-hidden transition-transform duration-500 hover:scale-105">
-                            <img src="/images/profile.jpg" alt="Marie Danise Bola&ntilde;os" class="w-full h-full object-cover">
+                        <div class="relative z-20 w-30 h-30 sm:w-80 sm:h-80 transition-transform duration-500 hover:scale-105">
+                            <img src="/images/profile.jpg" alt="Marie Danise Bola&ntilde;os" class="profile-photo-img w-full h-full object-cover">
                         </div>
+
+{{-- Double rectangle frame (SVG, crisp at any size) --}}
+                        <div class="profile-frame-double" aria-hidden="true">
+                            <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+                                {{-- Thin outer outline at the photo edge (photo = frame size), sharp corners --}}
+                                <path d="M 0 0 H 1000 V 1000 H 0 Z"
+                                      stroke="#000000" stroke-width="4" stroke-linejoin="miter" fill="none"/>
+                                {{-- Thick bold outline, offset inward/down-right --}}
+                                <path d="M 30 29 H 986 V 998 H 30 Z"
+                                      stroke="#000000" stroke-width="13" stroke-linejoin="miter" fill="none"/>
+                            </svg>
+                        </div>
+
                         <div class="absolute -bottom-4 -right-4 w-24 h-24 rounded-2xl -z-10 transition-transform duration-500"
                              style="background-color: rgba(210, 180, 140, 0.25); transform: rotate(6deg);"></div>
                     </div>
@@ -120,7 +133,7 @@
 
                     {{-- Skill pills --}}
                     <div class="flex flex-wrap gap-3 mt-6 font-merriweather">
-                        @foreach(['Web Development', 'Data Analytics', 'IT Support', 'Data Visualization', 'Computer Systems', 'ICT'] as $skill)
+                        @foreach(['Web Development', 'ICT'] as $skill)
                             <span class="px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 hover:scale-105"
                                   style="background-color: var(--accent-50); color: var(--accent-600); border: 1px solid var(--accent-200);">
                                 {{ $skill }}
@@ -209,10 +222,11 @@
             </div>
 
             {{-- Certifications --}}
-            <div class="max-w-3xl mx-auto">
-                <h3 class="text-2xl font-bold mb-8 text-center" style="font-family: var(--font-heading); color: var(--text-primary);">
+            <div id="certifications" class="max-w-3xl mx-auto">
+                <h3 class="text-3xl sm:text-4xl font-bold mb-4 text-center" style="font-family: 'Abril Fatface', var(--font-heading); color: var(--text-primary);">
                     Certifications
                 </h3>
+                <div class="w-16 h-1 rounded-full mx-auto mb-6" style="background-color: var(--accent-500);"></div>
 
                 @php
                     $certifications = [
@@ -289,6 +303,26 @@
             ])
 
             @php
+                $emisImages = [];
+                for ($i = 1; $i <= 13; $i++) {
+                    if ($i === 12) continue; // EMIS_12 is blank/placeholder
+                    $path = "/images/projects/emisystem/EMIS_{$i}.png";
+                    if (file_exists(public_path($path))) {
+                        $emisImages[] = $path;
+                    }
+                }
+
+                $sadImages = [];
+                for ($i = 1; $i <= 53; $i++) {
+                    foreach (['jpg', 'png'] as $ext) {
+                        $path = "/images/projects/SAD/SAD_{$i}.{$ext}";
+                        if (file_exists(public_path($path))) {
+                            $sadImages[] = $path;
+                            break;
+                        }
+                    }
+                }
+
                 $projects = [
                     [
                         'title' => 'Online Selling Management System for Streetwear Apparel',
@@ -308,9 +342,7 @@
                     [
                         'title' => 'Diocese of Bangued — St. James the Elder Cathedral Parish Viewer Portal',
                         'description' => 'A web-based viewer portal for the Diocese of Bangued and St. James the Elder Cathedral Parish. Allows the public to view the parish calendar of masses, religious events, and activities, learn about its history and leadership, and reach the parish through a Contact Us page. Includes a login system for staff/admin access.',
-                        'images' => [
-                            '/images/projects/diocese-portal.png',
-                        ],
+                        'images' => $sadImages,
                         'tags' => ['PHP', 'Web Development', 'Visual Studio', 'Church Management System'],
                         'demo' => '',
                         'repo' => '',
@@ -318,19 +350,40 @@
                     [
                         'title' => "Alegria's School PE Dept. Equipment Monitoring & Inventory System",
                         'description' => "A desktop inventory and monitoring system built for a school's PE Department to track sports equipment. Features a dashboard, equipment list management, a borrowing/return tracking module, inventory oversight, and a reports/print function for generating equipment records.",
-                        'images' => [
-                            '/images/projects/EMIS/EMIS_1.png',
-                            '/images/projects/EMIS/EMIS_2.png',
-                            '/images/projects/EMIS/EMIS_3.png',
-                            '/images/projects/EMIS/EMIS_4.png',
-                            '/images/projects/EMIS/EMIS_5.png',
-                            '/images/projects/EMIS/EMIS_6.png',
-                            '/images/projects/EMIS/EMIS_7.png',
-                            '/images/projects/EMIS/EMIS_8.png',
-                            '/images/projects/EMIS/EMIS_9.png',
-                            '/images/projects/EMIS/EMIS_11.png',
-                        ],
+                        'images' => $emisImages,
                         'tags' => ['C#', 'Windows Forms', '.NET', 'Inventory Management', 'School System'],
+                        'demo' => '',
+                        'repo' => '',
+                    ],
+                    [
+                        'title' => 'Area Finder',
+                        'description' => 'A simple desktop utility application that calculates the area of basic geometric shapes. Users can input dimensions for a rectangle (length and width) or a triangle (base and height) and instantly compute the area through a straightforward, checkbox-based interface. Built as a hands-on exercise in form validation, conditional logic, and basic arithmetic operations in C#.',
+                        'images' => ['/images/projects/Areafinder.png'],
+                        'tags' => ['C#', 'Windows Forms', '.NET', 'Desktop Application', 'Utility Tool'],
+                        'demo' => '',
+                        'repo' => '',
+                    ],
+                    [
+                        'title' => 'Permanent Record System',
+                        'description' => 'A student information management form that records comprehensive personal, academic, and family background details — including semester enrollment, course, personal information, addresses, educational history, special skills, and emergency contact details. Includes full CRUD functionality (Search, Save, Update, Clear, Delete, Display) for maintaining accurate and organized student permanent records.',
+                        'images' => ['/images/projects/PermanentRec.png'],
+                        'tags' => ['C#', 'Windows Forms', '.NET', 'CRUD', 'Student Records', 'Data Management'],
+                        'demo' => '',
+                        'repo' => '',
+                    ],
+                    [
+                        'title' => "Student's Grade Computation System",
+                        'description' => "A grade computation tool designed to calculate and organize a student's prelim grade breakdown. Automatically computes raw scores and ratings for quizzes, recitations, assignments, and attendance, then combines them into a final prelim exam rate and grade. Streamlines manual grade tallying into a fast, structured, and reusable interface for instructors.",
+                        'images' => ['/images/projects/StudentsGrade.png'],
+                        'tags' => ['C#', 'Windows Forms', '.NET', 'Grade Computation', 'Academic Tool'],
+                        'demo' => '',
+                        'repo' => '',
+                    ],
+                    [
+                        'title' => 'VB Sample Records System',
+                        'description' => 'A basic records management application built to practice core VB.NET form operations. Allows users to input an ID number, name, and address, then Save, Update, Delete, Search, and Display records through a simple, color-coded interface — serving as a foundational exercise in database-style CRUD operations using Visual Basic.',
+                        'images' => ['/images/projects/VbSample.png'],
+                        'tags' => ['VB.NET', 'Windows Forms', 'CRUD', 'Records Management', 'Desktop Application'],
                         'demo' => '',
                         'repo' => '',
                     ],
@@ -356,7 +409,7 @@
                 'subtitle' => 'Have a project in mind or just want to say hello? I\'d love to hear from you.',
             ])
 
-            <div class="grid md:grid-cols-2 gap-12 lg:gap-16 max-w-5xl mx-auto">
+            <div class="grid gap-12 lg:gap-16 max-w-3xl mx-auto">
 
                 {{-- Contact Info --}}
                 <div class="space-y-8">
@@ -419,47 +472,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                {{-- Contact Form --}}
-                <div class="p-8 rounded-2xl transition-shadow duration-300 hover:shadow-lg"
-                     style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
-                    <form action="#" method="POST" class="space-y-5">
-                        @csrf
-                        <div>
-                            <label for="name" class="block text-sm font-medium mb-2" style="color: var(--text-primary);">Name</label>
-                            <input type="text" id="name" name="name" required
-                                   class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
-                                   style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary);"
-                                   onfocus="this.style.borderColor='var(--accent-500)'; this.style.boxShadow='0 0 0 3px var(--accent-100)'"
-                                   onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'"
-                                   placeholder="Your name">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium mb-2" style="color: var(--text-primary);">Email</label>
-                            <input type="email" id="email" name="email" required
-                                   class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
-                                   style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary);"
-                                   onfocus="this.style.borderColor='var(--accent-500)'; this.style.boxShadow='0 0 0 3px var(--accent-100)'"
-                                   onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'"
-                                   placeholder="your@email.com">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium mb-2" style="color: var(--text-primary);">Message</label>
-                            <textarea id="message" name="message" rows="5" required
-                                      class="w-full px-4 py-3 rounded-xl text-sm outline-none transition-all duration-200 resize-none"
-                                      style="background-color: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-primary);"
-                                      onfocus="this.style.borderColor='var(--accent-500)'; this.style.boxShadow='0 0 0 3px var(--accent-100)'"
-                                      onblur="this.style.borderColor='var(--border-color)'; this.style.boxShadow='none'"
-                                      placeholder="Tell me about your project..."></textarea>
-                        </div>
-                        <button type="submit"
-                                class="w-full py-3.5 rounded-xl text-white font-semibold text-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
-                                style="background-color: var(--accent-500);"
-                                onmouseover="this.style.backgroundColor='var(--accent-600)'" onmouseout="this.style.backgroundColor='var(--accent-500)'">
-                            Send Message
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -532,16 +544,21 @@
             <div class="cert-modal-header">
                 <h3 id="cert-modal-title" class="cert-modal-title"></h3>
                 <div class="cert-modal-actions">
-                    <a id="cert-modal-download" href="" target="_blank" rel="noopener"
-                       class="cert-modal-action-btn"
-                       aria-label="Download certificate">
+                    <button id="cert-zoom-in" class="cert-modal-action-btn" onclick="certZoomIn()" aria-label="Zoom in" title="Zoom in" disabled>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                            <polyline points="7 10 12 15 17 10"/>
-                            <line x1="12" y1="15" x2="12" y2="3"/>
+                            <path d="M12 5v14M5 12h14"/>
                         </svg>
-                        <span>Download</span>
-                    </a>
+                    </button>
+                    <button id="cert-zoom-out" class="cert-modal-action-btn" onclick="certZoomOut()" aria-label="Zoom out" title="Zoom out" disabled>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14"/>
+                        </svg>
+                    </button>
+                    <button id="cert-zoom-reset" class="cert-modal-action-btn" onclick="resetCertZoom()" aria-label="Reset zoom" title="Reset zoom">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 8V4m0 0h4M4 4l5 5M20 8V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5M20 16v4m0 0h-4m4 0l-5-5"/>
+                        </svg>
+                    </button>
                     <button class="cert-modal-close" onclick="closeCertModal()" aria-label="Close certificate viewer">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 6L6 18M6 6l12 12"/>
@@ -551,8 +568,10 @@
             </div>
 
             {{-- Certificate Image --}}
-            <div class="cert-modal-body">
-                <img id="cert-modal-image" src="" alt="" class="cert-modal-image">
+            <div class="cert-modal-body" id="cert-modal-body">
+                <div id="cert-zoom-wrap" class="cert-zoom-wrap">
+                    <img id="cert-modal-image" src="" alt="" class="cert-modal-image">
+                </div>
             </div>
         </div>
     </div>

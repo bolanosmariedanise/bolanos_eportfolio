@@ -10,6 +10,8 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
     --font-serif: 'Merriweather', Georgia, 'Times New Roman', serif;
+    --font-nav: 'Baloo 2', 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --font-montserrat: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ── Merriweather utility for serif body/headings ── */
@@ -311,12 +313,48 @@ body {
     box-shadow: 0 0 16px rgba(244, 168, 137, 0.20);
 }
 
-/* ── Profile image shadow ── */
-.profile-shadow {
-    box-shadow: 0 20px 60px -15px rgba(244, 168, 137, 0.30), 0 0 40px rgba(247, 201, 168, 0.10);
+/* ── Profile image — no silhouette glow; neon lives on the frame outline ── */
+.profile-photo-img {
+    filter: none;
 }
-.dark .profile-shadow {
-    box-shadow: 0 20px 60px -15px rgba(244, 168, 137, 0.22), 0 0 50px rgba(244, 168, 137, 0.08);
+
+/* ── Double rectangle frame around the profile photo ── */
+.profile-frame-double {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 106%;
+    height: 106%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    opacity: 0.9;
+    z-index: 30;
+    overflow: visible;
+}
+.dark .profile-frame-double {
+    opacity: 1;
+}
+
+/* Frame strokes are SOLID BLACK in both light and dark mode */
+.dark .profile-frame-double svg path {
+    stroke: #000000;
+}
+
+/* ── Peach neon glow tracing the frame outline (light mode) ── */
+.profile-frame-double svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+    filter: drop-shadow(0 0 6px rgba(255, 153, 102, 0.85))
+            drop-shadow(0 0 12px rgba(255, 153, 102, 0.60))
+            drop-shadow(0 0 24px rgba(255, 153, 102, 0.30));
+}
+/* ── Peach neon glow tracing the frame outline (dark mode) ── */
+.dark .profile-frame-double svg {
+    filter: drop-shadow(0 0 8px rgba(255, 153, 102, 0.90))
+            drop-shadow(0 0 16px rgba(255, 153, 102, 0.60))
+            drop-shadow(0 0 32px rgba(255, 153, 102, 0.30));
 }
 
 /* Scroll indicator */
@@ -850,6 +888,36 @@ body.modal-open {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Zoom / pan wrapper for the certificate image */
+.cert-zoom-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    will-change: transform;
+    cursor: zoom-in;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.cert-zoom-wrap.is-zoomed {
+    cursor: grab;
+}
+.cert-zoom-wrap.is-dragging {
+    cursor: grabbing;
+}
+
+/* Disabled state for zoom action buttons */
+.cert-modal-action-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
 /* Body scroll lock when cert modal is open */

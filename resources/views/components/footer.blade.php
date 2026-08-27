@@ -8,8 +8,8 @@
             {{-- Left: Brand + tagline --}}
             <div class="text-center md:text-left">
                 <a href="#home" class="flex items-center gap-2 justify-center md:justify-start mb-3 group">
-                    <span class="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm transition-transform duration-300 group-hover:scale-110"
-                          style="background-color: var(--accent-500);">MDB</span>
+                    <img src="/images/profile.jpg" alt="Marie Danise Bola&ntilde;os"
+                         class="w-9 h-9 rounded-lg object-cover transition-transform duration-300 group-hover:scale-110">
                     <span class="text-lg font-bold" style="color: var(--text-primary);">Marie Danise</span>
                 </a>
                 <p class="text-sm max-w-xs" style="color: var(--text-muted);">
@@ -19,8 +19,8 @@
 
             {{-- Center: Quick links --}}
             <div class="flex flex-wrap items-center justify-center gap-6">
-                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Projects' => '#projects', 'Contact' => '#contact'] as $label => $href)
-                    <a href="{{ $href }}" class="text-sm font-medium transition-colors duration-200"
+                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects', 'Contact' => '#contact'] as $label => $href)
+                    <a href="{{ $href }}" class="text-sm font-medium font-nav transition-colors duration-200"
                        style="color: var(--text-secondary);"
                        onmouseover="this.style.color='var(--accent-500)'" onmouseout="this.style.color='var(--text-secondary)'">
                         {{ $label }}
