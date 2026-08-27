@@ -15,7 +15,7 @@
 
             {{-- Desktop Navigation --}}
             <div class="hidden md:flex items-center gap-1">
-                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects', 'Contact' => '#contact'] as $label => $href)
+                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects'] as $label => $href)
                     <a href="{{ $href }}"
                        class="nav-link-item px-4 py-2 text-sm font-medium font-nav rounded-lg transition-all duration-200 hover:scale-105"
                        style="color: var(--text-secondary);"
@@ -62,7 +62,7 @@
     {{-- Mobile Menu --}}
     <div id="mobile-menu" class="hidden md:hidden border-t" style="border-color: var(--border-color); background-color: var(--bg-primary);">
         <div class="px-4 py-3 space-y-1">
-            @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects', 'Contact' => '#contact'] as $label => $href)
+            @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects'] as $label => $href)
                 <a href="{{ $href }}"
                    class="block px-4 py-2.5 text-sm font-medium font-nav rounded-lg transition-colors duration-200"
                    style="color: var(--text-secondary);"
