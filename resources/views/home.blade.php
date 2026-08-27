@@ -303,15 +303,6 @@
             ])
 
             @php
-                $emisImages = [];
-                for ($i = 1; $i <= 13; $i++) {
-                    if ($i === 12) continue; // EMIS_12 is blank/placeholder
-                    $path = "/images/projects/emisystem/EMIS_{$i}.png";
-                    if (file_exists(public_path($path))) {
-                        $emisImages[] = $path;
-                    }
-                }
-
                 $sadImages = [];
                 for ($i = 1; $i <= 53; $i++) {
                     foreach (['jpg', 'png'] as $ext) {
@@ -340,14 +331,6 @@
                         'description' => 'A web-based viewer portal for the Diocese of Bangued and St. James the Elder Cathedral Parish. Allows the public to view the parish calendar of masses, religious events, and activities, learn about its history and leadership, and reach the parish through a Contact Us page. Includes a login system for staff/admin access.',
                         'images' => $sadImages,
                         'tags' => ['PHP', 'Web Development', 'Visual Studio', 'Church Management System'],
-                        'demo' => '',
-                        'repo' => '',
-                    ],
-                    [
-                        'title' => "Alegria's School PE Dept. Equipment Monitoring & Inventory System",
-                        'description' => "A desktop inventory and monitoring system built for a school's PE Department to track sports equipment. Features a dashboard, equipment list management, a borrowing/return tracking module, inventory oversight, and a reports/print function for generating equipment records.",
-                        'images' => $emisImages,
-                        'tags' => ['C#', 'Windows Forms', '.NET', 'Inventory Management', 'School System'],
                         'demo' => '',
                         'repo' => '',
                     ],
