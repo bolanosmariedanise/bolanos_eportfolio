@@ -351,30 +351,6 @@
                         'demo' => '',
                         'repo' => '',
                     ],
-                    [
-                        'title' => 'Permanent Record System',
-                        'description' => 'A student information management form that records comprehensive personal, academic, and family background details — including semester enrollment, course, personal information, addresses, educational history, special skills, and emergency contact details. Includes full CRUD functionality (Search, Save, Update, Clear, Delete, Display) for maintaining accurate and organized student permanent records.',
-                        'images' => ['/images/projects/PermanentRec.png'],
-                        'tags' => ['C#', 'Windows Forms', '.NET', 'CRUD', 'Student Records', 'Data Management'],
-                        'demo' => '',
-                        'repo' => '',
-                    ],
-                    [
-                        'title' => "Student's Grade Computation System",
-                        'description' => "A grade computation tool designed to calculate and organize a student's prelim grade breakdown. Automatically computes raw scores and ratings for quizzes, recitations, assignments, and attendance, then combines them into a final prelim exam rate and grade. Streamlines manual grade tallying into a fast, structured, and reusable interface for instructors.",
-                        'images' => ['/images/projects/StudentsGrade.png'],
-                        'tags' => ['C#', 'Windows Forms', '.NET', 'Grade Computation', 'Academic Tool'],
-                        'demo' => '',
-                        'repo' => '',
-                    ],
-                    [
-                        'title' => 'VB Sample Records System',
-                        'description' => 'A basic records management application built to practice core VB.NET form operations. Allows users to input an ID number, name, and address, then Save, Update, Delete, Search, and Display records through a simple, color-coded interface — serving as a foundational exercise in database-style CRUD operations using Visual Basic.',
-                        'images' => ['/images/projects/VbSample.png'],
-                        'tags' => ['VB.NET', 'Windows Forms', 'CRUD', 'Records Management', 'Desktop Application'],
-                        'demo' => '',
-                        'repo' => '',
-                    ],
                 ];
             @endphp
 
