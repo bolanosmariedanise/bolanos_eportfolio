@@ -248,6 +248,42 @@
                             'date' => 'December 11, 2025',
                             'image' => '/certificates/Dataanalytics.png',
                         ],
+                        [
+                            'title' => 'Introduction to Modern AI',
+                            'issuer' => 'DICT-ITU DTC Initiative (Cisco Networking Academy)',
+                            'date' => 'October 16, 2026',
+                            'image' => 'img/CERT/cisco.jpg',
+                        ],
+                        [
+                            'title' => 'Understanding Startups and Getting Your Idea Ready for the Philippine Startup Challenge XI',
+                            'issuer' => 'Department of Information and Communications Technology — CAR',
+                            'date' => 'September 7, 2026',
+                            'image' => 'img/CERT/startup1.png',
+                        ],
+                        [
+                            'title' => 'Stay Alert, Stay Secure: Promoting Cyber Awareness and Online Scam Prevention',
+                            'issuer' => 'Commission on Higher Education — CAR (SEEDLING Project)',
+                            'date' => 'July 25, 2026',
+                            'image' => 'img/CERT/seed1.png',
+                        ],
+                        [
+                            'title' => 'Caring in Crisis: Mental Health for All in Times of Emergency',
+                            'issuer' => 'CHED UniFAST — Cordillera Administrative Region',
+                            'date' => 'October 15, 2025',
+                            'image' => 'img/CERT/seed2.png',
+                        ],
+                        [
+                            'title' => 'Introduction to Modern AI — Student Level Credential',
+                            'issuer' => 'Cisco Networking Academy',
+                            'date' => 'DATE_HERE',
+                            'image' => 'img/CERT/cisco badge.jpg',
+                        ],
+                        [
+                            'title' => 'STARTUP NOW CORDILLERA: Exploring Programs, Funding, and Opportunities for Aspiring Startups',
+                            'issuer' => 'iHub Science',
+                            'date' => 'DATE_HERE',
+                            'image' => 'img/CERT/startup2.png',
+                        ],
                     ];
                 @endphp
 
@@ -331,6 +367,19 @@
                         'description' => 'A web-based viewer portal for the Diocese of Bangued and St. James the Elder Cathedral Parish. Allows the public to view the parish calendar of masses, religious events, and activities, learn about its history and leadership, and reach the parish through a Contact Us page. Includes a login system for staff/admin access.',
                         'images' => $sadImages,
                         'tags' => ['PHP', 'Web Development', 'Visual Studio', 'Church Management System'],
+                        'demo' => '',
+                        'repo' => '',
+                    ],
+                    [
+                        'title' => 'STUDENT DOCUMENTS SYSTEM FOR DCCP-BANGUED',
+                        'description' => 'A student documents system developed for DCCP-Bangued to manage and organize student records and documents.',
+                        'images' => [
+                            'img/STUDENT_RECORD/1.jpeg',
+                            'img/STUDENT_RECORD/2.png',
+                            'img/STUDENT_RECORD/3.png',
+                            'img/STUDENT_RECORD/4.png',
+                        ],
+                        'tags' => ['Student Documents System', 'DCCP-Bangued'],
                         'demo' => '',
                         'repo' => '',
                     ],

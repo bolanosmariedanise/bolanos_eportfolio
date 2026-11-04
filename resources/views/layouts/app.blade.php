@@ -14,6 +14,9 @@
 
     {{-- Vite CSS/JS --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    {{-- Favicon --}}
+    <link rel="icon" type="image/png" href="img/MDB/favicon_mdb.png">
 </head>
 <body class="font-sans antialiased">
 
