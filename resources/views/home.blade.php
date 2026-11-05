@@ -407,7 +407,7 @@ onclick="openCertModal({{ $loop->index }})"
 
             <div class="space-y-4">
                 {{-- Email --}}
-                <a href="mailto:YOUR_EMAIL_HERE"
+                <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank" rel="noopener"
                    class="flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
                    style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
                     <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
@@ -419,7 +419,7 @@ onclick="openCertModal({{ $loop->index }})"
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-xs font-medium mb-0.5" style="color: var(--text-muted);">Email</p>
-                        <p class="text-sm font-bold font-merriweather break-all" style="color: var(--text-primary);">YOUR_EMAIL_HERE</p>
+                        <p class="text-sm font-bold font-merriweather break-all" style="color: var(--text-primary);">bolanosmariedanise@gmail.com</p>
                     </div>
                 </a>
 
