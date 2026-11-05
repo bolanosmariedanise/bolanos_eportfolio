@@ -405,6 +405,16 @@ onclick="openCertModal({{ $loop->index }})"
                         'demo' => '',
                         'repo' => '',
                     ],
+                    [
+                        'title' => 'PERMANENT RECORD',
+                        'description' => 'A desktop application for managing and organizing student permanent records.',
+                        'images' => [
+                            'img/PERMANENT_REC/1.png',
+                        ],
+                        'tags' => ['VB.NET', 'Windows Forms', 'Desktop Application', 'Student Records'],
+                        'demo' => '',
+                        'repo' => '',
+                    ],
                 ];
             @endphp
 
