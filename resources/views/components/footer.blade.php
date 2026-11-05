@@ -19,7 +19,7 @@
 
             {{-- Center: Quick links --}}
             <div class="flex flex-wrap items-center justify-center gap-6">
-                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects'] as $label => $href)
+                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects', 'Contact' => '#contact'] as $label => $href)
                     <a href="{{ $href }}" class="text-sm font-medium font-nav transition-colors duration-200"
                        style="color: var(--text-secondary);"
                        onmouseover="this.style.color='var(--accent-500)'" onmouseout="this.style.color='var(--text-secondary)'">

@@ -8,14 +8,14 @@
 
             {{-- Logo / Name --}}
             <a href="#home" class="flex items-center gap-2 group">
-                <span class="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold text-sm transition-transform duration-300 group-hover:scale-110"
-                      style="background-color: var(--accent-500);">P</span>
+                <img src="/img/MDB/favicon_mdb.png" alt="MDB logo"
+                     class="w-9 h-9 rounded-lg object-cover transition-transform duration-300 group-hover:scale-110">
                 <span class="text-lg font-bold font-montserrat hidden sm:block" style="color: var(--text-primary);">MY PORTFOLIO</span>
             </a>
 
             {{-- Desktop Navigation --}}
             <div class="hidden md:flex items-center gap-1">
-                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects'] as $label => $href)
+                @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects', 'Contact' => '#contact'] as $label => $href)
                     <a href="{{ $href }}"
                        class="nav-link-item px-4 py-2 text-sm font-medium font-nav rounded-lg transition-all duration-200 hover:scale-105"
                        style="color: var(--text-secondary);"
@@ -62,7 +62,7 @@
     {{-- Mobile Menu --}}
     <div id="mobile-menu" class="hidden md:hidden border-t" style="border-color: var(--border-color); background-color: var(--bg-primary);">
         <div class="px-4 py-3 space-y-1">
-            @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects'] as $label => $href)
+            @foreach(['Home' => '#home', 'About' => '#about', 'Education' => '#education', 'Certifications' => '#certifications', 'Projects' => '#projects', 'Contact' => '#contact'] as $label => $href)
                 <a href="{{ $href }}"
                    class="block px-4 py-2.5 text-sm font-medium font-nav rounded-lg transition-colors duration-200"
                    style="color: var(--text-secondary);"

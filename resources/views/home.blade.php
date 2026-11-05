@@ -395,6 +395,72 @@ onclick="openCertModal({{ $loop->index }})"
     </section>
 
     {{-- ═══════════════════════════════════════
+         SECTION 5: CONTACT
+         ═══════════════════════════════════════ --}}
+    <section id="contact" class="py-24 sm:py-32" style="background-color: var(--bg-primary);">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            @include('components.section-header', [
+                'title' => 'Contact',
+                'subtitle' => 'Get in touch with me.',
+            ])
+
+            <div class="space-y-4">
+                {{-- Email --}}
+                <a href="mailto:YOUR_EMAIL_HERE"
+                   class="flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
+                   style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+                    <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                         style="background-color: var(--accent-50);">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                             style="color: var(--accent-500);">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-medium mb-0.5" style="color: var(--text-muted);">Email</p>
+                        <p class="text-sm font-bold font-merriweather break-all" style="color: var(--text-primary);">YOUR_EMAIL_HERE</p>
+                    </div>
+                </a>
+
+                {{-- Phone --}}
+                <a href="tel:0992695595"
+                   class="flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
+                   style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+                    <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                         style="background-color: var(--accent-50);">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                             style="color: var(--accent-500);">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-medium mb-0.5" style="color: var(--text-muted);">Phone</p>
+                        <p class="text-sm font-bold font-merriweather" style="color: var(--text-primary);">0992695595</p>
+                    </div>
+                </a>
+
+                {{-- Address --}}
+                <div class="flex items-center gap-4 p-5 rounded-2xl"
+                     style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);">
+                    <div class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                         style="background-color: var(--accent-50);">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"
+                             style="color: var(--accent-500);">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+                        </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-medium mb-0.5" style="color: var(--text-muted);">Address</p>
+                        <p class="text-sm font-bold font-merriweather" style="color: var(--text-primary);">Pias Sur, Tayum, Abra</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- ═══════════════════════════════════════
          PROJECT MODAL / LIGHTBOX
          ═══════════════════════════════════════ --}}
     <div id="project-modal" class="project-modal" role="dialog" aria-modal="true" aria-label="Project details" aria-hidden="true">
