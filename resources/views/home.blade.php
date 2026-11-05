@@ -151,7 +151,7 @@
                     'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
                 ])
                 @include('components.stat-card', [
-                    'number' => '3',
+                    'number' => '9',
                     'label' => 'Certifications',
                     'icon' => 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
                 ])
@@ -292,10 +292,10 @@
                         <div class="cert-card flex items-start gap-4 p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
                              @if(!empty($cert['image']))
                              style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card); cursor: pointer;"
-                             onclick="openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['image']) }}')"
-                             role="button" tabindex="0"
-                             aria-label="View certificate: {{ $cert['title'] }}"
-                             onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal('{{ addslashes($cert['title']) }}', '{{ addslashes($cert['image']) }}')}"
+onclick="openCertModal({{ $loop->index }})"
+                              role="button" tabindex="0"
+                              aria-label="View certificate: {{ $cert['title'] }}"
+                              onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openCertModal({{ $loop->index }})}"
                              @else
                              style="background-color: var(--bg-card); border: 1px solid var(--border-color); box-shadow: var(--shadow-card);"
                              @endif
@@ -489,8 +489,27 @@
                 <div id="cert-zoom-wrap" class="cert-zoom-wrap">
                     <img id="cert-modal-image" src="" alt="" class="cert-modal-image">
                 </div>
+                <button id="cert-prev-btn" class="cert-modal-nav cert-modal-nav-prev" onclick="prevCert()" aria-label="Previous certificate">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <button id="cert-next-btn" class="cert-modal-nav cert-modal-nav-next" onclick="nextCert()" aria-label="Next certificate">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+            {{-- Caption: title + counter --}}
+            <div class="cert-modal-caption">
+                <span id="cert-modal-caption-title" class="cert-modal-caption-title"></span>
+                <span id="cert-modal-counter" class="cert-modal-counter"></span>
             </div>
         </div>
     </div>
 
+    {{-- Pass certificate data to JavaScript --}}
+    <script>
+        window.__certsData = @json($certifications);
+    </script>
 @endsection

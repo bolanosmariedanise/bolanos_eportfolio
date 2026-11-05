@@ -914,6 +914,68 @@ body.modal-open {
     cursor: grabbing;
 }
 
+/* Certificate modal navigation arrows */
+.cert-modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 6;
+    width: 2.75rem;
+    height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(245, 184, 149, 0.45);
+    cursor: pointer;
+    background-color: rgba(74, 59, 48, 0.45);
+    color: #fffaf3;
+    transition: background-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+.cert-modal-nav:hover {
+    background-color: rgba(245, 184, 149, 0.45);
+    color: #4a3b30;
+    transform: translateY(-50%) scale(1.1);
+}
+.cert-modal-nav:focus-visible {
+    outline: 2px solid var(--accent-400);
+    outline-offset: 2px;
+}
+.cert-modal-nav-prev { left: 0.75rem; }
+.cert-modal-nav-next { right: 0.75rem; }
+
+/* Certificate modal caption (title + counter) */
+.cert-modal-caption {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+}
+.cert-modal-caption-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    flex: 1;
+}
+.cert-modal-counter {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    letter-spacing: 0.025em;
+}
+
 /* Disabled state for zoom action buttons */
 .cert-modal-action-btn:disabled {
     opacity: 0.4;
@@ -958,5 +1020,16 @@ body.cert-modal-open {
 
     .cert-modal-action-btn {
         padding: 0.375rem;
+    }
+
+    .cert-modal-nav {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+    .cert-modal-nav-prev { left: 0.5rem; }
+    .cert-modal-nav-next { right: 0.5rem; }
+
+    .cert-modal-caption {
+        padding: 0.625rem 1rem;
     }
 }

@@ -314,6 +314,18 @@ function handleModalKeydown(e) {
             return;
         }
 
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevCert();
+            return;
+        }
+
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextCert();
+            return;
+        }
+
         if (e.key === 'Tab') {
             trapFocus(e, document.getElementById('cert-modal'));
         }
@@ -351,6 +363,7 @@ function trapFocus(e, container) {
 const certModalState = {
     isOpen: false,
     previousFocus: null,
+    certIndex: 0,
 };
 
 const certZoomState = {
@@ -534,22 +547,88 @@ function initCertModal() {
             }
         }
     }, { passive: false });
+
+    /* Swipe left/right on mobile to navigate certificates */
+    const body = document.getElementById('cert-modal-body');
+    let swipeStartX = null;
+    let swipeStartY = null;
+    if (body) {
+        body.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1 && certZoomState.scale <= 1) {
+                swipeStartX = e.touches[0].clientX;
+                swipeStartY = e.touches[0].clientY;
+            } else {
+                swipeStartX = null;
+                swipeStartY = null;
+            }
+        }, { passive: true });
+
+        body.addEventListener('touchend', (e) => {
+            if (swipeStartX === null || certZoomState.scale > 1) {
+                swipeStartX = null;
+                swipeStartY = null;
+                return;
+            }
+            const t = e.changedTouches && e.changedTouches[0];
+            if (!t) return;
+            const dx = t.clientX - swipeStartX;
+            const dy = t.clientY - swipeStartY;
+            if (Math.abs(dx) > 50 && Math.abs(dy) < 80) {
+                if (dx < 0) nextCert();
+                else prevCert();
+            }
+            swipeStartX = null;
+            swipeStartY = null;
+        }, { passive: true });
+    }
 }
 
-function openCertModal(title, imageUrl) {
+function getCerts() {
+    return Array.isArray(window.__certsData) ? window.__certsData : [];
+}
+
+function updateCertModal() {
+    const certs = getCerts();
+    if (!certs.length) return;
+    const idx = ((certModalState.certIndex % certs.length) + certs.length) % certs.length;
+    certModalState.certIndex = idx;
+    const cert = certs[idx];
+    if (!cert) return;
+    const title = cert.title || '';
+
+    const titleEl = document.getElementById('cert-modal-title');
+    if (titleEl) titleEl.textContent = title;
+
+    const captionTitleEl = document.getElementById('cert-modal-caption-title');
+    if (captionTitleEl) captionTitleEl.textContent = title;
+
+    const img = document.getElementById('cert-modal-image');
+    if (img) {
+        img.src = cert.image || '';
+        img.alt = title;
+    }
+
+    const counterEl = document.getElementById('cert-modal-counter');
+    if (counterEl) counterEl.textContent = `${idx + 1} / ${certs.length}`;
+
+    resetCertZoom();
+}
+
+function openCertModal(index) {
+    const certs = getCerts();
+    if (!certs.length) return;
     const modal = document.getElementById('cert-modal');
-    if (!modal || !imageUrl) return;
+    if (!modal) return;
+
+    let i = parseInt(index, 10);
+    if (isNaN(i)) i = 0;
+    i = ((i % certs.length) + certs.length) % certs.length;
 
     certModalState.previousFocus = document.activeElement;
     certModalState.isOpen = true;
+    certModalState.certIndex = i;
 
-    document.getElementById('cert-modal-title').textContent = title;
-
-    const img = document.getElementById('cert-modal-image');
-    img.src = imageUrl;
-    img.alt = title;
-
-    resetCertZoom();
+    updateCertModal();
 
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
@@ -559,6 +638,22 @@ function openCertModal(title, imageUrl) {
         const closeBtn = modal.querySelector('.cert-modal-close');
         if (closeBtn) closeBtn.focus();
     });
+}
+
+function prevCert() {
+    if (!certModalState.isOpen) return;
+    const certs = getCerts();
+    if (!certs.length) return;
+    certModalState.certIndex = (certModalState.certIndex - 1 + certs.length) % certs.length;
+    updateCertModal();
+}
+
+function nextCert() {
+    if (!certModalState.isOpen) return;
+    const certs = getCerts();
+    if (!certs.length) return;
+    certModalState.certIndex = (certModalState.certIndex + 1) % certs.length;
+    updateCertModal();
 }
 
 function closeCertModal() {
@@ -594,6 +689,8 @@ window.nextGalleryImage = nextGalleryImage;
 window.goToGalleryImage = goToGalleryImage;
 window.openCertModal = openCertModal;
 window.closeCertModal = closeCertModal;
+window.prevCert = prevCert;
+window.nextCert = nextCert;
 window.certZoomIn = certZoomIn;
 window.certZoomOut = certZoomOut;
 window.resetCertZoom = resetCertZoom;
